@@ -1,0 +1,38 @@
+.learn-to-section {
+    display: flex;
+    flex-direction: column;
+    height: 33%;
+    background-color: rgb(211, 218, 248);
+}
+
+.edit-name-des {
+    margin-bottom: 5px;
+    height: 45px;
+    width: 45px;
+    margin-left: auto;
+}
+
+.play-list-item {
+    height: 65px;
+    display: flex; 
+    background-color: rgb(126, 134, 163);
+    border: 1px solid rgb(12, 12, 12);
+    border-radius: 5px;
+}
+
+.play-list-text {
+    max-width: 80%;
+    width: 80%;
+}
+
+.play-btn-off {
+    max-width: 20%;
+    max-height: 100%;
+}
+
+.play-list-edit {
+    height: 70%;
+    margin-top: auto;
+    margin-bottom: auto ;
+    margin-left: 15%;
+}

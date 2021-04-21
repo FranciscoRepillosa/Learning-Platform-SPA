@@ -1,0 +1,12 @@
+.search-box {
+    box-sizing: border-box;
+    border: 1px solid rgb(240, 226, 226);
+    border-radius: 35px;
+    outline: none;
+    font-size: 20px;
+    padding-left: 35px;
+    background-color: rgb(80, 79, 79);
+    margin-left: 5%;
+    width: 90%;
+    height: 65px;
+}
