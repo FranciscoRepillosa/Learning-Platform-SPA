@@ -5,6 +5,8 @@ import "../../components/course-card/course-card.styles.css";
 import SearchBox from "../../components/search-box/search-box.component";
 import MainTitle from "../../components/header/header.component";
 import CourseCard from "../../components/course-card/course-card.component";
+import ProfileIcon from "../../components/profile-icon/profile-icon.component";
+import TopNavContainer from "../../components/top-nav-container/top-nav-container.component";
 
 class HomePage extends Component {
     constructor() {
@@ -30,12 +32,12 @@ class HomePage extends Component {
      this.setState({ courses: searchedCourses })
     
   }
-    
+     
     
     render() {
       return (
         <div>
-          <SearchBox onSearchInputChange={this.HandleSearchInputChange} />
+          <TopNavContainer onSearchInputChange={this.HandleSearchInputChange} />
           <MainTitle text="Best tech courses ever" />
           {console.log("st", this.state.courses)}
           { this.state.courses.map(course => (

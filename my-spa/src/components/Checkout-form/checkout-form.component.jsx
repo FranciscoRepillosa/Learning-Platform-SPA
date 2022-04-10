@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {useStripe, useElements, CardElement} from '@stripe/react-stripe-js';
 import CardSection  from '../payment-card/payment-card.component';
+import CheckoutFormInputs from '../Checkout-form-inputs/Checkout-form-inputs.component';
 
 const axios = require("axios").default;
 
@@ -33,8 +34,42 @@ export default function CheckoutForm ({courseId}) {
         break;
     }
   };
+
+  const setJWT = (token) => {
+    localStorage.setItem('authorization', `Bearer ${token}`);
+  }
+
+  const createUser = async (userData) => {
+    
+    const newUser = await axios({
+      method: "post",
+      url: "http://localhost:4321/user/signup",
+      data: userData
+    });
+    
+    return newUser
+  }
+
+  const giveCourseAccess = () => {
+    axios({
+      method: "patch",
+      url: "http://localhost:4321/user/giveCourseAccess",
+      headers: {
+        "authorization": localStorage.getItem("authorization")
+      },
+      data: {
+        courseId
+      }
+    })
+    .then(res => {
+      console.log(res);
+      alert("Success shopping");
+      window.location.replace("http://localhost:3000");
+    })
+  }
   
-     const handleSubmit = (event) => {
+    
+  const handleSubmit = (event) => {
     // We don't want to let default form submission happen here,
     // which would refresh the page.
     event.preventDefault();
@@ -69,117 +104,34 @@ export default function CheckoutForm ({courseId}) {
         if (result.paymentIntent.status === 'succeeded') {
             console.log("oh yeah baby, we did it ouo ouo ouo ouo");
           // Show a success message to your customer
-            console.log(event.target.value);
-            console.log("nameInput ",nameInput);
-            console.log("emailInput ",{emailInput});
-            console.log("passwordInput ",{passwordInput});
-            console.log("confirmPasswordInput ",{ confirmPasswordInput });
 
-            const userData = {
-              name: nameInput,
-              email: emailInput,
-              password: passwordInput,
-              confirmPassword: confirmPasswordInput
-            };
+            if(!localStorage.getItem('authorization')) {
+              
+              const userData = {
+                name: nameInput,
+                email: emailInput,
+                password: passwordInput,
+                confirmPassword: confirmPasswordInput
+              };
 
+              const newUser = await createUser(userData);
+
+              setJWT(newUser.data.token);
+
+            }
             
-            console.log(courseId);
-            axios({
-              method: "post",
-              url: "http://localhost:4321/user/signup",
-              data: userData
-            })
-            .then(res => {
-              console.log(res);
-              localStorage.setItem('authorization', `Bearer ${res.data.token}`);
-
-              axios({
-                method: "patch",
-                url: "http://localhost:4321/user/giveCourseAccess",
-                headers: {
-                  "authorization": localStorage.getItem("authorization")
-                },
-                data: {
-                  courseId
-                }
-              })
-              .then(res => {
-                console.log(res);
-                alert("Success shopping");
-                window.location.replace("http://localhost:3000");
-              })
-              .catch(function (error) {
-                if (error.response) {
-                  // The request was made and the server responded with a status code
-                  // that falls out of the range of 2xx
-                  console.log(error.response.data);
-                  alert(error.response.data.message);
-                  console.log(error.response.status);
-                  console.log(error.response.headers);
-                } else if (error.request) {
-                  // The request was made but no response was received
-                  // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-                  // http.ClientRequest in node.js
-                  console.log(error.request);
-                } else {
-                  // Something happened in setting up the request that triggered an Error
-                  console.log('Error', error.message);
-                }
-                console.log(error.config);
-              });
-
-            })
-            .catch(function (error) {
-              if (error.response) {
-                // The request was made and the server responded with a status code
-                // that falls out of the range of 2xx
-                console.log(error.response.data);
-                alert(error.response.data.message);
-                console.log(error.response.status);
-                console.log(error.response.headers);
-              } else if (error.request) {
-                // The request was made but no response was received
-                // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-                // http.ClientRequest in node.js
-                console.log(error.request);
-              } else {
-                // Something happened in setting up the request that triggered an Error
-                console.log('Error', error.message);
-              }
-              console.log(error.config);
-            });
-
+              giveCourseAccess();
             
-
           
-          // register the user by making a API call to user/signup
-          // localStorage.setItem('Authorization', rememberMe);
-          // once is register give accsess to brought course by making a API call to user/
-          // payment_intent.succeeded event that handles any business critical
-          // post-payment actions.
         }
       }
     });
-    
-    /*
-    var response = fetch('/http://localhost:4321/checkout/').then(function(response) {
-        return response.json();
-      }).then(function(responseJson) {
-         clientSecret = responseJson.client_secret;
-        console.log(clientSecret);
-        // Render the form to collect payment details, then
-        // call stripe.confirmCardPayment() with the client secret.
-      });
-      */
     
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" placeholder="name" name="name" onChange={handleInputChange} id=""/> <br/>
-      <input type="email" placeholder="email" name="email" onChange={handleInputChange} id=""/> <br/>
-      <input type="password" placeholder="password" name="password" onChange={handleInputChange} id=""/> <br/>
-      <input type="password" placeholder="repeat password" name="confirmPassword" onChange={handleInputChange} id=""/> <br/>
+      <CheckoutFormInputs onInputChange={handleInputChange} />
       <CardSection  />
       <button disabled={!stripe}>Confirm order</button>
     </form>

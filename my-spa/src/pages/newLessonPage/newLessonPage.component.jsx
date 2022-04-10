@@ -1,31 +1,26 @@
 import React, {Component, useState} from "react";
 import SearchBox from "../../components/search-box/search-box.component";
 import FormInput from "../../components/input/input.component";
-import "./SubmitCoursePage.styles.css"
+import "../SubmitCoursePage/SubmitCoursePage.styles.css";
 import MainTitle from "../../components/header/header.component";
 const axios = require("axios");
 
-const SubmitCoursePage = () => {
+const NewLessonPage = (props) => {
 
-    const [CourseName, setCourseName] = useState("");
-    const [CourseDescription, setCourseDescription] = useState("");
-    const [CoverImage, setCoverImage] = useState("");
-    const [VideoIntro, setVideoIntro] = useState("");
+  console.log(props);
+
+    const [LessonName, setLessonName] = useState("");
+    const [VideoLesson, setVideoLesson] = useState("");
 
 
     const handleInputChange = (event) => {
         switch (event.target.name) {
-          case "courseName":
-            setCourseName(event.target.value);
+          case "LessonName":
+            setLessonName(event.target.value);
             break;
-          case "courseDescription":
-            setCourseDescription(event.target.value);
-            break;
-          case "coverImage":
-            setCoverImage(event.target.files[0]);
-            break;
-          case "videoIntro":
-            setVideoIntro(event.target.files[0]);
+          case "VideoLesson":
+            console.log(event.target.files[0])
+            setVideoLesson(event.target.files[0]);
             break;
         
         }
@@ -33,8 +28,8 @@ const SubmitCoursePage = () => {
 
       const handleSubmit = (event) => {
         event.preventDefault();
-        console.log(VideoIntro);
-        console.log(CoverImage);
+        console.log(LessonName);
+        console.log(VideoLesson);
         
         
         const accessKey = localStorage.getItem('authorization');
@@ -44,23 +39,13 @@ const SubmitCoursePage = () => {
       
         // Update the formData object 
       formData.append( 
-        "coverImage", 
-        CoverImage
+        "lessonName", 
+        LessonName
       );
 
       formData.append( 
-        "videoIntro", 
-        VideoIntro
-      );
-
-      formData.append( 
-        "courseName", 
-        CourseName, 
-      );
-
-      formData.append( 
-        "courseDescription", 
-        CourseDescription, 
+        "videoLesson", 
+        VideoLesson
       );
 
       console.log(formData);
@@ -69,7 +54,7 @@ const SubmitCoursePage = () => {
       // Send formData object 
       axios({
       method: "post",
-      url: "http://localhost:4321/courses", 
+      url: `http://localhost:4321/lesson/${props.match.params.courseId}`, 
       data: formData,
       headers : {
         "Content-Type": "multipart/form-data",
@@ -86,13 +71,11 @@ const SubmitCoursePage = () => {
     return (
         <div>
             <SearchBox />
-            <MainTitle text={"New Course"}/>
+            <MainTitle text={"New Lesson"}/>
             <form enctype="multipart/form-data">
                 <div className="basic-card new-lesson-form" >
-                    <FormInput type={"text"} name={"courseName"} placeholder={"Course Name"}  onInputChange={handleInputChange} />
-                    <FormInput type={"text"} name={"courseDescription"} placeholder={"Course Description"}  onInputChange={handleInputChange} />
-                    <FormInput type={"file"} name={"coverImage"} placeholder={"Cover Image"}  onInputChange={handleInputChange} />
-                    <FormInput type={"file"} name={"videoIntro"} placeholder={"Video Intro"}  onInputChange={handleInputChange} />
+                    <FormInput type={"text"} name={"LessonName"} placeholder={"Lesson Name"}  onInputChange={handleInputChange} />
+                    <FormInput type={"file"} name={"VideoLesson"} placeholder={"Video Lesson"}  onInputChange={handleInputChange} />
                     <FormInput type={"submit"} submitHandler={handleSubmit} placeholder={"Create Course"} />
                     
                 </div>
@@ -101,4 +84,4 @@ const SubmitCoursePage = () => {
     );
 }
 
-export default SubmitCoursePage;
+export default NewLessonPage;
