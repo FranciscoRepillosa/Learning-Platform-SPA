@@ -69,8 +69,9 @@ const SubmitCoursePage = () => {
       // Send formData object 
       axios({
       method: "post",
-      url: "http://localhost:4321/courses", 
+      url: "http://localhost:2121/courses", 
       data: formData,
+      withCredentials: true,
       headers : {
         "Content-Type": "multipart/form-data",
         "Authorization": accessKey

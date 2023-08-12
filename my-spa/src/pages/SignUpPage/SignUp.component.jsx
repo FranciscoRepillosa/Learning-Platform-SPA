@@ -1,13 +1,16 @@
 import React, {Component, useState} from "react";
+import {useNavigate} from "react-router-dom";
 import SearchBox from "../../components/search-box/search-box.component";
 import FormInput from "../../components/input/input.component";
 import "../SubmitCoursePage/SubmitCoursePage.styles.css";
 import MainTitle from "../../components/header/header.component";
 const axios = require("axios");
 
+
 const NewLessonPage = (props) => {
 
-  console.log(props);
+    console.log(props);
+    const navigate = useNavigate()
 
     const [name, setUserName] = useState("");
     const [email, setEmail] = useState("");
@@ -48,12 +51,21 @@ const NewLessonPage = (props) => {
       // Send formData object 
       axios({
       method: "post",
-      url: `http://localhost:4000/user/signup`, 
-      data: reqBody
+      url: `http://localhost:2121/user/signup`, 
+      data: reqBody,
+      withCredentials: true
       })
       .then(res => {
         console.log(res);
-        localStorage.setItem('authorization', `Bearer ${res.data.token}`);
+        const wannaGoTo = localStorage.getItem("goTo");
+        if (res.data.status === 'success' && !wannaGoTo ) {
+          localStorage.setItem("isLogin", true);
+          navigate('/signup')
+        }
+        else if(res.data.status === 'success' && wannaGoTo ){
+          localStorage.setItem("isLogin", true);
+          navigate(wannaGoTo)
+        }
       })
     }
 

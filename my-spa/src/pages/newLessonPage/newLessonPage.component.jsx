@@ -54,7 +54,8 @@ const NewLessonPage = (props) => {
       // Send formData object 
       axios({
       method: "post",
-      url: `http://localhost:4321/lesson/${props.match.params.courseId}`, 
+      withCredentials: true,
+      url: `http://localhost:2121/lesson/${props.match.params.courseId}`, 
       data: formData,
       headers : {
         "Content-Type": "multipart/form-data",
