@@ -51,7 +51,7 @@ const NewLessonPage = (props) => {
       // Send formData object 
       axios({
       method: "post",
-      url: `http://localhost:2121/user/signup`, 
+      url: `http://api.courseapp.repillosa.com/user/signup`, 
       data: reqBody,
       withCredentials: true
       })
