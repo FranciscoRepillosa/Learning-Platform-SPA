@@ -1,11 +1,14 @@
 import React, {useState} from 'react';
 import {useStripe, useElements, CardElement} from '@stripe/react-stripe-js';
+import {useNavigate, useParams} from "react-router-dom";
 import CardSection  from '../payment-card/payment-card.component';
 import CheckoutFormInputs from '../Checkout-form-inputs/Checkout-form-inputs.component';
 
 const axios = require("axios").default;
 
 export default function CheckoutForm ({courseId}) {
+
+  const navigate = useNavigate()
 
   const [nameInput, setNameInput] = useState("");
   const [emailInput, setEmailInput] = useState("");
@@ -43,7 +46,8 @@ export default function CheckoutForm ({courseId}) {
     
     const newUser = await axios({
       method: "post",
-      url: "http://localhost:4321/user/signup",
+      withCredentials: true,
+      url: "http://localhost:2121/user/signup",
       data: userData
     });
     
@@ -51,20 +55,26 @@ export default function CheckoutForm ({courseId}) {
   }
 
   const giveCourseAccess = () => {
+
+    console.log('from giveCourseAccess courseId: ',courseId);
+
     axios({
-      method: "patch",
-      url: "http://localhost:4321/user/giveCourseAccess",
+      method: "post",
       headers: {
-        "authorization": localStorage.getItem("authorization")
+        'Content-Type': 'application/json'
       },
+      url: "http://localhost:2121/user/giveCourseAccess",
       data: {
-        courseId
-      }
+        courseId: courseId
+      },
+      withCredentials: true,
     })
     .then(res => {
-      console.log(res);
       alert("Success shopping");
-      window.location.replace("http://localhost:3000");
+      if (res.status === 200) {
+        navigate(`/course/${courseId}`)
+      }
+
     })
   }
   
@@ -83,7 +93,7 @@ export default function CheckoutForm ({courseId}) {
     console.log("creating the client_secret");
     let clientSecret;
 
-    fetch(`http://localhost:4321/checkout/${courseId}}`)
+    fetch(`http://localhost:2121/checkout/${courseId}}`)
     .then(response => response.json())
     .then(async clientSecret => {
       
@@ -104,21 +114,6 @@ export default function CheckoutForm ({courseId}) {
         if (result.paymentIntent.status === 'succeeded') {
             console.log("oh yeah baby, we did it ouo ouo ouo ouo");
           // Show a success message to your customer
-
-            if(!localStorage.getItem('authorization')) {
-              
-              const userData = {
-                name: nameInput,
-                email: emailInput,
-                password: passwordInput,
-                confirmPassword: confirmPasswordInput
-              };
-
-              const newUser = await createUser(userData);
-
-              setJWT(newUser.data.token);
-
-            }
             
               giveCourseAccess();
             

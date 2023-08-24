@@ -15,7 +15,8 @@ class SearchBox extends React.Component {
             const inputValue = document.getElementById("searchBox").value;
             axios({
                 method: 'get',
-                url: `http://localhost:4321/courses?searchInput=${inputValue}`,
+                withCredentials: true,
+                url: `http://localhost:2121/courses?searchInput=${inputValue}`,
               })
                 .then(response => {
                     this.props.onSearchInputChange(response.data.data.courses)

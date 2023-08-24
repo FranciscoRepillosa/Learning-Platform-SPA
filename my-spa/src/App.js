@@ -2,8 +2,8 @@ import React from "react"
 import HomePage from "./pages/HomePage/HomePage.component";
 import CoursePage from "./pages/CoursePage/CoursePage.component";
 import CheackoutPage from "./pages/CheckoutPage/CheckoutPage.component";
-import {Route, Switch} from "react-router-dom";
-import { BrowserRouter as Router } from "react-router-dom";
+//import {Route, Routes, Switch} from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import SubmitCoursePage from "./pages/SubmitCoursePage/SubmitCoursePage.component";
 import TestPage from "./pages/TestPage/TestPage.component";
 import newLessonPage from "./pages/newLessonPage/newLessonPage.component";
@@ -25,17 +25,18 @@ const App = () => {
   return (
     <div>
       <Router>
-        <Switch>
-          <Route exact={true} path="/" component={HomePage}/>
-          <Route exact={true} path="/course/:courseId" component={CoursePage}/>
-          <Route exact={true} path="/checkout/:courseId" component={CheackoutPage}/>
-          <Route exact={true} path="/course" component={SubmitCoursePage} />
-          <Route exact={true} path="/testpage" component={ProfileIcon} />
-          <Route exact={true} path="/newlesson/:courseId" component={newLessonPage} />
-          <Route exact={true} path="/mycourses" component={UserCourseListPage} />
-          <Route exact={true} path="/signup" component={SignUpPage} />			  
-          <Route exact={true} path="/login" component={LoginPage} />         
-        </Switch>
+        <Routes>
+          <Route path="/" element={< HomePage/> }/>
+          <Route exact={true} path="/course/:courseId" element={< CoursePage/> }/>
+          <Route exact={true} path="/checkout/:courseId" element={< CheackoutPage/> }/>
+          <Route exact={true} path="/course" element={< SubmitCoursePage/> } />
+          <Route exact={true} path="/testpage" element={ <ProfileIcon/> } />
+          <Route exact={true} path="/newlesson/:courseId" element={ <newLessonPage/> } />
+          <Route exact={true} path="/mycourses" element={ <UserCourseListPage/> } />
+          <Route exact={true} path="/signup" element={ <SignUpPage/> } />			  
+          <Route exact={true} path="/login" element={ <LoginPage/> } />
+          <Route exact={true} path="/test" element={ <TestPage/> } />         
+        </Routes>
       </Router>
     </div>
   )

@@ -9,7 +9,7 @@ const ProfileIcon = ({onInputChange}) => {
 
     useEffect(() => {
         const accessKey = localStorage.getItem('authorization');
-        fetch("http://localhost:4321/media/userimage", {
+        fetch("http://localhost:2121/media/userimage", {
         headers: {
             "Authorization": accessKey
         }
