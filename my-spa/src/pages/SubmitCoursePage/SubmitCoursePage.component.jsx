@@ -4,6 +4,7 @@ import FormInput from "../../components/input/input.component";
 import "./SubmitCoursePage.styles.css"
 import MainTitle from "../../components/header/header.component";
 const axios = require("axios");
+axios.defaults.baseURL = 'https://api.courseapp.repillosa.com';
 
 const SubmitCoursePage = () => {
 
@@ -69,7 +70,7 @@ const SubmitCoursePage = () => {
       // Send formData object 
       axios({
       method: "post",
-      url: "http://localhost:2121/courses", 
+      url: "/courses", 
       data: formData,
       withCredentials: true,
       headers : {

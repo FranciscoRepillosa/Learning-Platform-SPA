@@ -5,6 +5,8 @@ import FormInput from "../../components/input/input.component";
 import "../SubmitCoursePage/SubmitCoursePage.styles.css";
 import MainTitle from "../../components/header/header.component";
 const axios = require("axios");
+axios.defaults.baseURL = 'https://api.courseapp.repillosa.com';
+
 //import Cookies from 'universal-cookie';
 
 const LoginPage = (props) => {
@@ -42,7 +44,7 @@ const LoginPage = (props) => {
       // Send formData object 
       axios({
       method: "post",
-      url: `http://localhost:2121/user/login`, 
+      url: `/user/login`, 
       data: reqBody,
       withCredentials: true
       })

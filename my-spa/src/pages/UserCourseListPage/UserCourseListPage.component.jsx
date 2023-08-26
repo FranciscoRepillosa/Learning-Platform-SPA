@@ -4,6 +4,7 @@ import "../SubmitCoursePage/SubmitCoursePage.styles.css";
 import MainTitle from "../../components/header/header.component";
 import CourseCard from "../../components/course-card/course-card.component";
 const axios = require("axios");
+axios.defaults.baseURL = 'https://api.courseapp.repillosa.com';
 
 const UserCourseListPage = (props) => {
 
@@ -15,7 +16,7 @@ const UserCourseListPage = (props) => {
         const accessKey = localStorage.getItem('authorization');
         axios({
             method: "get",
-            url: `http://localhost:4321/user/courses`,
+            url: `/user/courses`,
             headers : {
               "Authorization": accessKey
             }
