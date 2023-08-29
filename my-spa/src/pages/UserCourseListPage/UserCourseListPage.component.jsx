@@ -16,6 +16,7 @@ const UserCourseListPage = (props) => {
         const accessKey = localStorage.getItem('authorization');
         axios({
             method: "get",
+            withCredentials: true,
             url: `/user/courses`,
             headers : {
               "Authorization": accessKey
