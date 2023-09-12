@@ -4,9 +4,8 @@ import SearchBox from "../../components/search-box/search-box.component";
 import FormInput from "../../components/input/input.component";
 import "../SubmitCoursePage/SubmitCoursePage.styles.css";
 import MainTitle from "../../components/header/header.component";
+import config from '../../config.dev'
 const axios = require("axios");
-axios.defaults.baseURL = 'https://api.courseapp.repillosa.com';
-
 
 const NewLessonPage = (props) => {
 
@@ -46,13 +45,13 @@ const NewLessonPage = (props) => {
           confirmPassword
       };
 
-      console.log(reqBody);
+      console.log(config.baseURL);
      
       // Request made to the backend api 
       // Send formData object 
       axios({
       method: "post",
-      url: `/user/signup`, 
+      url: config.baseURL+`/user/signup`, 
       data: reqBody,
       withCredentials: true
       })
@@ -61,6 +60,7 @@ const NewLessonPage = (props) => {
         const wannaGoTo = localStorage.getItem("goTo");
         if (res.data.status === 'success' && !wannaGoTo ) {
           localStorage.setItem("isLogin", true);
+          localStorage.setItem("authorization", `Bearer ${res.data.token}`);
           navigate('/signup')
         }
         else if(res.data.status === 'success' && wannaGoTo ){

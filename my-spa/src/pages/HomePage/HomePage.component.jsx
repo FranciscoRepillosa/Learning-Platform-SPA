@@ -32,7 +32,7 @@ class HomePage extends Component {
      this.setState({ courses: searchedCourses })
     
   }
-     
+    
     
     render() {
       return (
@@ -40,6 +40,7 @@ class HomePage extends Component {
           <TopNavContainer onSearchInputChange={this.HandleSearchInputChange} />
           <MainTitle text="Best tech courses ever" />
           {console.log("st", this.state.courses)}
+          {console.log(this.HandleSearchInputChange)}
           { this.state.courses.map(course => (
             <CourseCard name={course.name} photo={course.photo} _id={course._id} />
           ) ) }

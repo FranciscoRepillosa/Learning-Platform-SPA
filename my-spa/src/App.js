@@ -1,4 +1,5 @@
 import React from "react"
+import dotenv from "dotenv";
 import HomePage from "./pages/HomePage/HomePage.component";
 import CoursePage from "./pages/CoursePage/CoursePage.component";
 import CheackoutPage from "./pages/CheckoutPage/CheckoutPage.component";
@@ -12,6 +13,9 @@ import SignUpPage from "./pages/SignUpPage/SignUp.component";
 import LoginPage from "./pages/LoginPage/LoginPageComponent";
 import ProfileIcon from "./components/profile-icon/profile-icon.component";
 console.log(TestPage.render)
+dotenv.config({ path: "../settings.env"})
+
+
 /*
 const Other = (props) => (
   <div>

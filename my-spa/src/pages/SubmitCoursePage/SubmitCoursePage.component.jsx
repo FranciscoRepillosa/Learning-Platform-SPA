@@ -4,7 +4,7 @@ import FormInput from "../../components/input/input.component";
 import "./SubmitCoursePage.styles.css"
 import MainTitle from "../../components/header/header.component";
 const axios = require("axios");
-axios.defaults.baseURL = 'https://api.courseapp.repillosa.com';
+axios.defaults.baseURL = 'http://localhost:2121';
 
 const SubmitCoursePage = () => {
 
@@ -34,6 +34,7 @@ const SubmitCoursePage = () => {
 
       const handleSubmit = (event) => {
         event.preventDefault();
+        console.log('que ondaaaaaaaaaaaaaaaaaaaaaaa', process.env);
         console.log(VideoIntro);
         console.log(CoverImage);
         

@@ -3,8 +3,8 @@ import SearchBox from "../../components/search-box/search-box.component";
 import "../SubmitCoursePage/SubmitCoursePage.styles.css";
 import MainTitle from "../../components/header/header.component";
 import CourseCard from "../../components/course-card/course-card.component";
+import config from '../../config.dev'
 const axios = require("axios");
-axios.defaults.baseURL = 'https://api.courseapp.repillosa.com';
 
 const UserCourseListPage = (props) => {
 
@@ -17,7 +17,7 @@ const UserCourseListPage = (props) => {
         axios({
             method: "get",
             withCredentials: true,
-            url: `/user/courses`,
+            url: config.baseURL+`/user/courses`,
             headers : {
               "Authorization": accessKey
             }

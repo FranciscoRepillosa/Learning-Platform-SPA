@@ -3,7 +3,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import "./CoursePage.styles.css"
 
 const axios = require('axios').default;
-axios.defaults.baseURL = 'https://api.courseapp.repillosa.com';
+axios.defaults.baseURL = process.env.baseURL;
 
 
 // class CoursePage1 extends Component {

@@ -4,8 +4,8 @@ import SearchBox from "../../components/search-box/search-box.component";
 import FormInput from "../../components/input/input.component";
 import "../SubmitCoursePage/SubmitCoursePage.styles.css";
 import MainTitle from "../../components/header/header.component";
+import config from '../../config.dev'
 const axios = require("axios");
-axios.defaults.baseURL = 'https://api.courseapp.repillosa.com';
 
 //import Cookies from 'universal-cookie';
 
@@ -44,7 +44,7 @@ const LoginPage = (props) => {
       // Send formData object 
       axios({
       method: "post",
-      url: `/user/login`, 
+      url: config.baseURL+`/user/login`, 
       data: reqBody,
       withCredentials: true
       })
@@ -53,7 +53,7 @@ const LoginPage = (props) => {
         const wannaGoTo = localStorage.getItem("goTo");
         if (res.data.status === 'success' && !wannaGoTo ) {
           localStorage.setItem("isLogin", true);
-          navigate('/signup')
+          //navigate('/signup')
         }
         else if(res.data.status === 'success' && wannaGoTo ){
           localStorage.setItem("isLogin", true);
